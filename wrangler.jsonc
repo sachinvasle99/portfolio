@@ -1,0 +1,14 @@
+{
+  // Static site on Cloudflare Workers Static Assets.
+  // No build step and no server-side code: Wrangler uploads everything in
+  // `public/` and Cloudflare serves it from the edge.
+  //
+  // The site lives in public/ rather than the repo root on purpose — with
+  // `directory: "."` Wrangler sweeps in .git and the repo metadata, and
+  // .assetsignore does not reliably exclude them.
+  "name": "sachin-portfolio",
+  "compatibility_date": "2026-09-10",
+  "assets": {
+    "directory": "public"
+  }
+}

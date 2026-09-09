@@ -8,8 +8,10 @@ Plain HTML, CSS and JavaScript. No framework, no build step, no dependencies.
 
 ## Run it locally
 
+The site lives in `public/`. Serve that directory, not the repo root:
+
 ```bash
-npx serve .
+cd public && python3 -m http.server 8080
 ```
 
 Opening `index.html` over `file://` works too, but `localStorage` (remembering the theme
@@ -19,14 +21,16 @@ toggle won't persist and the copy-email button falls back to `execCommand`.
 ## Structure
 
 ```
-index.html                    Single-page site
-notes/                        Field notes, one plain HTML page each
-req/css/styles.css            All styles — theme tokens, layout, motion
-req/js/main.js                Nav, theme, clock, magnetic, tilt, decode, reveals, marquee, copy
-req/js/preloader.js           Cluster-bootstrap loading sequence
-req/js/cursor.js              Custom signal cursor
-req/img/fav/                  Favicon set (SVG + PNG sizes + webmanifest)
-assets/                       Résumé PDF (see "Before publishing")
+wrangler.jsonc                Cloudflare Workers Static Assets config
+public/                       ← everything below here is the deployed site
+public/index.html             Single-page site
+public/notes/                 Field notes, one plain HTML page each
+public/req/css/styles.css     All styles — theme tokens, layout, motion
+public/req/js/main.js         Nav, theme, clock, magnetic, tilt, decode, reveals, marquee, copy
+public/req/js/preloader.js    Cluster-bootstrap loading sequence
+public/req/js/cursor.js       Custom signal cursor
+public/req/img/fav/           Favicon set (SVG + PNG sizes + webmanifest)
+public/assets/                Résumé PDF (see "Before publishing")
 ```
 
 ## Design
@@ -63,6 +67,17 @@ The page carries `TODO` comments at each of these:
   document. Confirm the wording, in particular whether these are environments built *for* those
   standards versus audits actually passed.
 - **CKA** — shown honestly as issued Feb 2022 and lapsed. Remove the `lapsed` tag when renewed.
+
+## Deploying
+
+Cloudflare Workers Static Assets, connected to this repo. There is no build step:
+
+- **Build command:** leave empty
+- **Deploy command:** `npx wrangler deploy`
+
+`wrangler.jsonc` points at `public/`. Do not set `assets.directory` to the repo
+root — Wrangler pulls in `.git` and the repo metadata along with it, and
+`.assetsignore` does not reliably exclude them.
 
 ## Attribution
 
