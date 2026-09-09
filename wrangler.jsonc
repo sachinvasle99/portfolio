@@ -9,6 +9,10 @@
   "name": "sachin-portfolio",
   "compatibility_date": "2026-09-10",
   "assets": {
-    "directory": "public"
+    "directory": "public",
+    // serve /notes/foo.html as-is. The default ("auto-trailing-slash")
+    // 307-redirects .html URLs to an extensionless path, which would send
+    // every link and canonical tag on the site through a redirect.
+    "html_handling": "none"
   }
 }
