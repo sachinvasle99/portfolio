@@ -1,5 +1,7 @@
 # Sachin Vasle — Portfolio
 
+Live at **https://sachinvasle.in**
+
 AI infrastructure and DevOps engineer. Hybrid Kubernetes across on-premises bare metal and
 AWS EKS, self-hosted LLM inference on on-prem GPUs, and an AI-powered SRE root cause analysis
 platform written from scratch.
@@ -58,8 +60,6 @@ The page carries `TODO` comments at each of these:
 
 - **Résumé PDF** — `assets/Sachin_Vasle_Resume.pdf` is linked from the hero and the footer
   but is not in the repo yet.
-- **Canonical URL and OG image** — `og:url`, `og:image` and `rel=canonical` are commented out in
-  `<head>` until there is a real domain.
 - **RAM-backed PostgreSQL** — the speed-up is described qualitatively in the Work section
   because the real before/after numbers are unknown. A concrete figure there would be the most
   quotable metric on the page.
