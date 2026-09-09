@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# TODO: point at the real domain once it exists.
+# Sitemap: https://example.com/sitemap.xml

@@ -1,0 +1,8 @@
+.DS_Store
+*.log
+node_modules/
+
+# scratch pages used for isolated render checks
+_t*.html
+_fav.html
+_lighttest.html

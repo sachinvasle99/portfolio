@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A WAF that 403s your PromQL — Sachin Vasle</title>
+  <meta name="description"
+    content="Cross-cluster PromQL queries failed only when the expression contained an aggregation function. The cause was a WAF rule, not Prometheus.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#f6f3ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#101113" media="(prefers-color-scheme: dark)">
+
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) { }
+    })();
+  </script>
+
+<link rel="icon" href="../req/img/fav/favicon.svg" type="image/svg+xml">
+  <link rel="icon" type="image/png" sizes="32x32" href="../req/img/fav/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../req/img/fav/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="../req/img/fav/apple-touch-icon.png">
+  <link rel="manifest" href="../req/img/fav/site.webmanifest">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="../req/css/styles.css">
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="siteHeader">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="../index.html" aria-label="Sachin Vasle — home">
+        <span class="brand__mark">SV</span>
+        <span class="brand__name">Sachin&nbsp;Vasle
+          <span class="role">AI Infrastructure &amp; DevOps Engineer</span>
+        </span>
+      </a>
+      <div class="nav__right" style="margin-left:auto">
+        <button class="icon-btn theme-toggle" id="themeToggle" type="button" aria-label="Switch theme">
+          <svg class="tt-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+          </svg>
+          <svg class="tt-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+          </svg>
+        </button>
+        <a class="btn btn--ghost" href="../index.html#notes">All notes</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" class="note-page">
+    <div class="container">
+
+      <div class="note-head">
+        <a class="backlink" href="../index.html#notes">← notes</a>
+        <h1>A WAF that 403s your PromQL</h1>
+        <div class="meta">
+          <span>2026-09-09</span>
+          <span>·</span>
+          <span class="tag tag--dim">promql</span>
+          <span class="tag tag--dim">waf</span>
+          <span class="tag tag--dim">observability</span>
+        </div>
+      </div>
+
+      <div class="prose">
+        <p>
+          While building cross-cluster investigations into our production environments, a subset of
+          metric queries started coming back as <code>403 Forbidden</code>. Not empty results, not a
+          timeout, not a 401 — a flat rejection, and only for <em>some</em> queries.
+        </p>
+
+        <p>
+          The pattern took a while to see because it has nothing to do with what the query means.
+          A query for a single series went through. The same query wrapped in an aggregation
+          came back 403:
+        </p>
+
+        <pre><code>rate(http_requests_total[5m])              → 200 OK
+sum(rate(http_requests_total[5m]))        → 403 Forbidden
+avg(node_memory_MemAvailable_bytes)       → 403 Forbidden
+min(kube_pod_status_ready)                → 403 Forbidden
+max(container_cpu_usage_seconds_total)    → 403 Forbidden
+count(up)                                 → 403 Forbidden</code></pre>
+
+        <p>
+          Every failing expression contained one of <code>sum(</code>, <code>avg(</code>,
+          <code>min(</code>, <code>max(</code> or <code>count(</code>. Those are, of course, exactly
+          the aggregation functions you reach for the moment you stop looking at one pod and start
+          looking at a cluster.
+        </p>
+
+        <h2>Why a WAF does this</h2>
+
+        <p>
+          Those five tokens are not interesting to Prometheus in the slightest. They are extremely
+          interesting to a SQL-injection ruleset. A generic managed WAF rule group looks at the
+          request — including the query string carrying the PromQL expression — sees an aggregate
+          function immediately followed by an open parenthesis, and scores it as SQLi. The request
+          never reaches the backend.
+        </p>
+
+        <blockquote>
+          <p>
+            The failure is not in the query language, the query engine, or the credentials. It is a
+            request-inspection layer applying database-shaped heuristics to a query language that
+            happens to share five keywords with SQL.
+          </p>
+        </blockquote>
+
+        <p>
+          This is the kind of thing that is invisible from either end. From the client it looks like
+          an authorization problem, so you go and check tokens and RBAC. From the metrics backend it
+          looks like the query was never sent, because it never was.
+        </p>
+
+        <h2>How to tell it apart from a real 403</h2>
+
+        <ul>
+          <li>Correlate on <em>expression shape</em>, not on scope or credentials. If
+            <code>sum(x)</code> fails and <code>x</code> succeeds with the same token against the
+            same endpoint, it is not authorization.</li>
+          <li>Look at the response body. An auth rejection from the metrics backend carries a
+            backend-shaped error; a WAF block usually returns generic HTML or a support ID and none
+            of your backend's error vocabulary.</li>
+          <li>Check where the 403 was logged. If the backend has no record of the request at all,
+            something in front of it answered.</li>
+          <li>Try the same expression as a POST body rather than a query string — a difference in
+            behaviour between the two points squarely at request inspection.</li>
+        </ul>
+
+        <h2>What this changed in how I build tooling</h2>
+
+        <p>
+          Any component that queries telemetry across an environment boundary is going through
+          somebody's edge, and that edge has opinions. So per-collector degradation stopped being a
+          nice-to-have: a collector that cannot get an answer has to report that it could not, name
+          why, and let the rest of the investigation continue. An RCA tool that silently drops a
+          data source is worse than one that says "no data from here" out loud, because the first
+          one lets you reason confidently from a hole in the evidence.
+        </p>
+
+        <!-- TODO (Sachin): add the resolution you actually shipped — a scoped WAF rule
+             exclusion for the metrics path, a POST-body rewrite, or querying from inside
+             the perimeter. Left out deliberately rather than guessed at. -->
+
+        <p class="dim">
+          Filed under things that cost an afternoon and take one sentence to explain afterwards.
+        </p>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer__row">
+      <a class="footer__brand" href="../index.html">
+        <span class="brand__mark">SV</span> Sachin Vasle
+      </a>
+      <span class="footer__mono">© 2026 · Pune, IN</span>
+      <div class="footer__links">
+        <a href="../index.html#notes">Notes</a>
+        <a href="../index.html#projects">Projects</a>
+        <a href="../index.html#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../req/js/main.js" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sachin Vasle — AI Infrastructure &amp; DevOps Engineer</title>
+  <meta name="description"
+    content="AI infrastructure and DevOps engineer. Hybrid Kubernetes across on-premises bare metal and AWS EKS, self-hosted LLM inference on on-prem GPUs, and an AI-powered SRE root cause analysis platform built from scratch.">
+  <meta name="author" content="Sachin Vasle">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0b0c0e" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#f6f3ee" media="(prefers-color-scheme: light)">
+
+  <!-- Theme boot — runs before first paint so there is no flash.
+       Dark is the design; light only when the visitor chooses it. -->
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      var t = 'dark';
+      try { var s = localStorage.getItem('theme'); if (s === 'light' || s === 'dark') t = s; } catch (e) { }
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sachin Vasle — AI Infrastructure &amp; DevOps Engineer">
+  <meta property="og:description"
+    content="Hybrid Kubernetes on bare metal and AWS, self-hosted LLM inference on on-prem GPUs, and an AI-powered SRE platform written from scratch.">
+  <meta property="og:locale" content="en_IN">
+  <!-- TODO before launch: set og:url, og:image and rel=canonical to the real domain. -->
+
+  <link rel="me" href="https://www.linkedin.com/in/sachin-vasle-a631bb194/">
+  <link rel="me" href="https://github.com/sachinvasle99">
+  <link rel="icon" href="req/img/fav/favicon.svg" type="image/svg+xml">
+  <link rel="icon" type="image/png" sizes="32x32" href="req/img/fav/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="req/img/fav/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="req/img/fav/apple-touch-icon.png">
+  <link rel="manifest" href="req/img/fav/site.webmanifest">
+
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="req/css/styles.css">
+</head>
+
+<body class="is-loading">
+
+  <!-- ═══ Preloader · cluster bootstrap ═══ -->
+  <div class="preloader" id="preloader" role="status" aria-live="polite" aria-label="Loading">
+    <div class="preloader__glow"></div>
+    <div class="preloader__scan"></div>
+    <div class="boot">
+      <div class="boot__cmd">
+        <span class="prompt">sachin@bare-metal</span>
+        <span>:~$ rke2 bootstrap --estate all</span>
+        <span class="caret"></span>
+      </div>
+
+      <div class="pipeline" aria-hidden="true">
+        <div class="pipeline__track"><span class="pipeline__fill"></span></div>
+
+        <div class="stage" data-stage="provision">
+          <div class="stage__dot">
+            <svg class="default" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="6" rx="1" />
+              <rect x="3" y="14" width="18" height="6" rx="1" />
+              <path d="M7 7h.01M7 17h.01" />
+            </svg>
+            <span class="spin"></span>
+            <svg class="stage__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+              stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+          </div>
+          <span class="stage__label">Provision</span>
+        </div>
+
+        <div class="stage" data-stage="etcd">
+          <div class="stage__dot">
+            <svg class="default" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <ellipse cx="12" cy="5" rx="8" ry="3" />
+              <path d="M4 5v14c0 1.66 3.58 3 8 3s8-1.34 8-3V5M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3" />
+            </svg>
+            <span class="spin"></span>
+            <svg class="stage__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+              stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+          </div>
+          <span class="stage__label">etcd</span>
+        </div>
+
+        <div class="stage" data-stage="converge">
+          <div class="stage__dot">
+            <svg class="default" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12a9 9 0 0 1-9 9 9 9 0 0 1-8.5-6M3 12a9 9 0 0 1 9-9 9 9 0 0 1 8.5 6" />
+              <path d="M21 3v6h-6M3 21v-6h6" />
+            </svg>
+            <span class="spin"></span>
+            <svg class="stage__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+              stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+          </div>
+          <span class="stage__label">Converge</span>
+        </div>
+
+        <div class="stage" data-stage="ready">
+          <div class="stage__dot">
+            <svg class="default" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2 3 7v10l9 5 9-5V7z" /><path d="m3 7 9 5 9-5M12 12v10" />
+            </svg>
+            <span class="spin"></span>
+            <svg class="stage__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+              stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+          </div>
+          <span class="stage__label">Ready</span>
+        </div>
+      </div>
+
+      <div class="boot__foot">
+        <div class="boot__status"><span class="text-muted">›</span> initializing<span class="text-muted">…</span></div>
+        <div class="boot__pct"><span class="n tnum">0</span><span class="s">%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ambient backdrop -->
+  <div class="backdrop" aria-hidden="true">
+    <div class="backdrop__grid"></div>
+    <div class="backdrop__glow"></div>
+    <div class="backdrop__grain"></div>
+  </div>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ═══ Navigation ═══ -->
+  <header class="site-header" id="siteHeader">
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a class="brand" href="#hero" aria-label="Sachin Vasle — home" data-cursor="top">
+        <span class="brand__mark">SV</span>
+        <span class="brand__name">Sachin&nbsp;Vasle <span class="role">— AI Infra &amp; DevOps</span></span>
+      </a>
+
+      <div class="nav__links" id="navLinks">
+        <a class="nav__link is-active" href="#hero">Home</a>
+        <a class="nav__link" href="#about">About</a>
+        <a class="nav__link" href="#work">Work</a>
+        <a class="nav__link" href="#stack">Stack</a>
+        <a class="nav__link" href="#xray">XRay</a>
+        <a class="nav__link" href="#security">Security</a>
+        <a class="nav__link" href="#proof">Proof</a>
+        <a class="nav__link" href="#contact">Contact</a>
+      </div>
+
+      <div class="nav__right">
+        <span class="nav__status" title="Local time · Pune (IST)">
+          <span class="live"></span>available
+          <span class="clock tnum" data-clock>00:00:00</span>
+        </span>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch theme" data-cursor="theme">
+          <svg class="tt-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+          </svg>
+          <svg class="tt-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+          </svg>
+        </button>
+        <a class="btn btn--primary nav__cta magnetic" href="#contact" data-cursor="connect">Let's talk</a>
+        <button class="nav__toggle" id="navToggle" type="button" aria-label="Toggle menu" aria-expanded="false"
+          aria-controls="navLinks">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ═══ Hero ═══ -->
+    <section class="hero" id="hero">
+      <div class="container">
+        <div class="hero__grid">
+
+          <div class="hero__intro">
+            <span class="eyebrow hero__eyebrow">AI Infrastructure &amp; DevOps
+              <span class="reg">&nbsp;· ap-south-1 / Pune</span></span>
+
+            <h1 class="hero__title" aria-label="Sachin Vasle">
+              <span class="line line--fill"><span data-decode="SACHIN">SACHIN</span></span>
+              <span class="line line--grad"><span data-decode="VASLE">VASLE</span><span class="blink"
+                  aria-hidden="true"></span></span>
+            </h1>
+
+            <p class="lead hero__lead">
+              I build and run <span class="em">hybrid Kubernetes platforms</span> — managed on AWS,
+              bare metal on-premises, everything as code — and the
+              <span class="em">AI infrastructure</span> that runs on top of them.
+            </p>
+
+            <div class="hero__actions">
+              <a class="btn btn--primary btn--lg magnetic" href="#xray" data-cursor="open">
+                See the work
+                <svg class="btn__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </a>
+              <a class="btn btn--ghost btn--lg" href="#contact" data-cursor="connect">
+                <svg class="btn__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16v16H4zM4 8h16M8 4v4" />
+                </svg>
+                Let's connect
+              </a>
+            </div>
+
+            <div class="status-strip" aria-label="Status">
+              <div class="stat">
+                <span class="stat__k">status</span>
+                <span class="stat__v live"><span class="dot"></span>open to opportunities</span>
+              </div>
+              <div class="stat">
+                <span class="stat__k">since</span>
+                <span class="stat__v">2021 · 5y 2m</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- The platform I work on, as layers. What I do, not what
+               my employer owns — no inventory, no counts. -->
+          <!-- The platform, bottom-up: cloud and clusters, the tooling that
+               drives them, what watches them, and the AI layer on top.
+               Capability only — no employer inventory. -->
+          <div class="topo" aria-label="Platform layers: cloud, Kubernetes, automation and delivery, observability, security and compliance, and AI infrastructure">
+            <svg viewBox="0 0 440 590" fill="none" role="img">
+
+              <!-- the spine: signal running down the stack -->
+              <path class="t-link" d="M20 34 V 540" />
+              <path class="t-flow" d="M20 34 V 540" pathLength="1" />
+
+              <!-- 1 · cloud -->
+              <g class="t-cluster" data-cursor="cloud">
+                <rect class="t-plane" x="36" y="16" width="396" height="72" rx="12" />
+                <text class="t-planelbl" x="54" y="40">cloud</text>
+                <text class="t-meta" x="54" y="60">aws · gcp · multi-region · on-premises</text>
+                <text class="t-meta" x="54" y="78">vpc · iam · ec2 · s3 · rds · lambda · route 53 · elb</text>
+                <circle class="t-node t-node--cp" cx="20" cy="52" r="6" />
+              </g>
+
+              <!-- 2 · kubernetes -->
+              <g class="t-cluster" data-cursor="kubernetes">
+                <rect class="t-plane" x="36" y="100" width="396" height="92" rx="12" />
+                <text class="t-planelbl" x="54" y="124">kubernetes</text>
+                <rect class="t-box" x="54" y="136" width="176" height="44" rx="8" />
+                <text class="t-name" x="68" y="154">managed</text>
+                <text class="t-meta" x="68" y="170">eks · gke · node groups</text>
+                <rect class="t-box" x="240" y="136" width="176" height="44" rx="8" />
+                <text class="t-name" x="254" y="154">bare metal · rke2</text>
+                <text class="t-meta" x="254" y="170">etcd · cni · certs · upgrades</text>
+                <circle class="t-node t-node--cp" cx="20" cy="146" r="6" />
+              </g>
+
+              <!-- 3 · automation and delivery -->
+              <g class="t-cluster" data-cursor="devops tooling">
+                <rect class="t-plane" x="36" y="204" width="396" height="92" rx="12" />
+                <text class="t-planelbl" x="54" y="228">automation &amp; delivery</text>
+                <rect class="t-box" x="54" y="240" width="176" height="44" rx="8" />
+                <text class="t-name" x="68" y="258">as code</text>
+                <text class="t-meta" x="68" y="274">terraform · terragrunt · ansible</text>
+                <rect class="t-box" x="240" y="240" width="176" height="44" rx="8" />
+                <text class="t-name" x="254" y="258">ci/cd · gitops</text>
+                <text class="t-meta" x="254" y="274">argocd · fluxcd · jenkins</text>
+                <circle class="t-node t-node--cp" cx="20" cy="250" r="6" />
+              </g>
+
+              <!-- 4 · observability -->
+              <g class="t-cluster" data-cursor="telemetry">
+                <rect class="t-plane" x="36" y="308" width="396" height="76" rx="12" />
+                <text class="t-planelbl" x="54" y="332">observability</text>
+                <text class="t-meta" x="54" y="352">prometheus · grafana · signoz · otel · loki · elk/efk</text>
+                <text class="t-meta" x="54" y="370">metrics · logs · traces · dashboards · pagerduty on-call</text>
+                <circle class="t-node t-node--cp" cx="20" cy="346" r="6" />
+              </g>
+
+              <!-- 5 · security and compliance -->
+              <g class="t-cluster" data-cursor="devsecops">
+                <rect class="t-plane" x="36" y="396" width="396" height="76" rx="12" />
+                <text class="t-planelbl" x="54" y="420">security &amp; compliance</text>
+                <text class="t-meta" x="54" y="440">trivy · vault · sealed secrets · eso · rbac · network policy</text>
+                <text class="t-meta" x="54" y="458">soc 2 · hipaa · data residency · least-privilege iam</text>
+                <circle class="t-node t-node--cp" cx="20" cy="434" r="6" />
+              </g>
+
+              <!-- 6 · ai infrastructure -->
+              <g class="t-cluster" data-cursor="ai infrastructure">
+                <rect class="t-plane" x="36" y="484" width="396" height="92" rx="12" />
+                <text class="t-planelbl" x="54" y="508">ai infrastructure</text>
+                <text class="t-meta" x="54" y="528">self-hosted llm · on-prem gpu serving · inference tuning</text>
+                <text class="t-meta" x="54" y="546">agentic rca · mcp · tool-calling · context management</text>
+                <text class="t-meta" x="54" y="564">read-only guardrails · deterministic core</text>
+                <circle class="t-node t-node--cp" cx="20" cy="530" r="6" />
+                <circle class="t-ring" cx="20" cy="530" r="6" />
+              </g>
+            </svg>
+          </div>
+
+        </div>
+      </div>
+
+      <a class="scroll-cue" href="#about" aria-label="Scroll down" data-cursor="scroll">
+        <span class="txt">scroll</span>
+        <span class="rail"></span>
+      </a>
+    </section>
+
+    <!-- ═══ Marquee ═══ -->
+    <div class="marquee" aria-label="Toolchain">
+      <div class="marquee__track" id="marqueeTrack">
+        <span class="marquee__item"><span class="d"></span>Kubernetes</span>
+        <span class="marquee__item"><span class="d"></span>RKE2</span>
+        <span class="marquee__item"><span class="d"></span>Bare Metal</span>
+        <span class="marquee__item"><span class="d"></span>Private Cloud</span>
+        <span class="marquee__item"><span class="d"></span>Amazon EKS</span>
+        <span class="marquee__item"><span class="d"></span>GKE</span>
+        <span class="marquee__item"><span class="d"></span>etcd</span>
+        <span class="marquee__item"><span class="d"></span>Terraform</span>
+        <span class="marquee__item"><span class="d"></span>Terragrunt</span>
+        <span class="marquee__item"><span class="d"></span>Ansible</span>
+        <span class="marquee__item"><span class="d"></span>ArgoCD</span>
+        <span class="marquee__item"><span class="d"></span>FluxCD</span>
+        <span class="marquee__item"><span class="d"></span>Jenkins · JCasC</span>
+        <span class="marquee__item"><span class="d"></span>Prometheus</span>
+        <span class="marquee__item"><span class="d"></span>Grafana</span>
+        <span class="marquee__item"><span class="d"></span>SigNoz</span>
+        <span class="marquee__item"><span class="d"></span>PagerDuty</span>
+        <span class="marquee__item"><span class="d"></span>OpenTelemetry</span>
+        <span class="marquee__item"><span class="d"></span>Python · FastAPI</span>
+        <span class="marquee__item"><span class="d"></span>Self-hosted LLM</span>
+        <span class="marquee__item"><span class="d"></span>GPU Inference</span>
+        <span class="marquee__item"><span class="d"></span>MCP</span>
+        <span class="marquee__item"><span class="d"></span>Vault</span>
+        <span class="marquee__item"><span class="d"></span>KEDA</span>
+      </div>
+    </div>
+
+    <!-- ═══ 01 · whoami ═══ -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="about__grid">
+
+          <aside class="idcard" id="idcard" data-reveal data-cursor="that's me">
+            <div class="idcard__head">
+              <span>identity.card</span>
+              <span class="on">verified</span>
+            </div>
+            <div class="idcard__photo">
+              <img src="req/img/profile.jpg" alt="Sachin Vasle" width="823" height="900"
+                loading="lazy" decoding="async">
+              <span class="idcard__scan" aria-hidden="true"></span>
+            </div>
+            <div class="idcard__body">
+              <div class="idrow"><span class="k">uid</span><span class="v">sachin-vasle</span></div>
+              <div class="idrow"><span class="k">role</span><span class="v">DevOps &amp; AI Infra Engineer</span></div>
+              <div class="idrow"><span class="k">company</span><span class="v acc">Krista AI</span></div>
+              <div class="idrow"><span class="k">what</span><span class="v">enterprise ai automation platform</span></div>
+              <div class="idrow"><span class="k">base</span><span class="v">18.5204° N · 73.8567° E</span></div>
+              <div class="idrow"><span class="k">tz</span><span class="v">IST · UTC+05:30</span></div>
+              <div class="idrow"><span class="k">exp</span><span class="v">5y 2m · since 2021</span></div>
+              <div class="idrow"><span class="k">certs</span><span class="v">AWS SAA-C03 · CKA</span></div>
+              <div class="idrow"><span class="k">status</span><span class="v acc">● open to opportunities</span></div>
+            </div>
+          </aside>
+
+          <div class="about__body">
+            <div class="section-head" style="margin-bottom:1.3rem">
+              <span class="eyebrow" data-reveal><span class="idx">01</span> — whoami</span>
+              <h2 data-reveal>I build the platform,<br>and the AI that runs on it.</h2>
+            </div>
+
+            <p class="lead-big" data-reveal>
+              DevOps, SRE and platform engineering across cloud and bare metal —
+              <span class="dim">plus the GPU and inference layer that modern products now expect
+                underneath them.</span>
+            </p>
+
+            <p class="lead" data-reveal>
+              I have run that migration in <span class="hl">both directions</span> — on-premises
+              onto EKS at one company, and EKS back onto our own hardware at the next. Very few
+              people have done the second one.
+            </p>
+
+            <p data-reveal>
+              <span class="hl">Cloud to bare metal.</span> At <span class="hl">Krista AI</span>, an
+              enterprise AI automation company, we moved production off EKS and
+              onto Kubernetes we run ourselves, and built the private cloud underneath it to do so —
+              the compute, the networking, the storage and the platform services a managed control
+              plane had been quietly providing. Cost and data residency drove the decision;
+              delivering it meant owning every layer that AWS used to own for us.
+            </p>
+
+            <p data-reveal>
+              <span class="hl">Bare metal to cloud.</span> Earlier, at Revent Labs, I ran it the
+              other way: on-premises workloads onto EKS, with the whole footprint — VPCs, subnets,
+              IAM, node groups and supporting services — as reusable Terraform and Terragrunt
+              modules replicated across multiple regions for fast failover. Alongside it, ECR,
+              Route 53, ELB, RDS and Aurora, Lambda and Secrets Manager, with least-privilege IAM
+              throughout, plus GCP and GKE.
+            </p>
+
+            <p data-reveal>
+              <span class="hl">Running your own</span> means no managed control plane to hide
+              behind, so I own the whole lifecycle: control-plane and worker provisioning, etcd
+              health and backups, rolling upgrades, certificate rotation, and the deep
+              troubleshooting that lands on the API server, scheduler, kubelet, CoreDNS and the CNI.
+              Node build-out is Ansible, so onboarding a machine is a playbook rather than an
+              afternoon. On-call runs through PagerDuty, so a real failure reaches a phone rather
+              than a channel nobody is reading.
+            </p>
+
+            <p data-reveal>
+              <span class="hl">Delivery is declarative all the way down.</span> Jenkins runs from
+              <span class="hl">Jenkins Configuration as Code (JCasC)</span> — controllers, plugins,
+              credentials and jobs defined in YAML in Git, so a Jenkins instance is something you
+              rebuild from a repository rather than a pet nobody dares restart, and a change to CI
+              gets reviewed like any other change. Around it: GitHub Actions, GitLab CI and
+              Bitbucket Pipelines running inside Kubernetes, JFrog Artifactory governing artifact
+              promotion, and GitOps on ArgoCD and FluxCD giving teams self-service deploys with
+              rollbacks that work.
+            </p>
+
+            <p data-reveal>
+              <span class="hl">Observability</span> is one layer across the whole estate —
+              Prometheus, Grafana, SigNoz, OpenTelemetry and ELK/EFK for metrics, logs and traces,
+              with the dashboards and alerting that incident response actually runs on, and
+              PagerDuty carrying the pages that matter.
+            </p>
+
+            <p data-reveal>
+              <span class="hl">On the AI side</span> I run self-hosted LLM inference on
+              on-premises GPU compute — model serving, GPU utilization, inference performance,
+              context management and tool-calling — and I designed and wrote
+              <span class="hl">Krista XRay</span>, the AI-powered SRE platform that uses it, where
+              the model reasons over real production telemetry it is structurally forbidden from
+              writing to. Next: Kubernetes orchestration for GPU workloads, and Go controllers with
+              Kubebuilder.
+            </p>
+
+            <div class="principles" data-stagger>
+              <article class="principle">
+                <span class="principle__n">01</span>
+                <h3>Everything as code</h3>
+                <p>Terraform and Terragrunt for infrastructure, Ansible for machines, Git as the
+                  source of truth for what is deployed. A change nobody can review is a change
+                  nobody can undo.</p>
+              </article>
+              <article class="principle">
+                <span class="principle__n">02</span>
+                <h3>Read-only by default</h3>
+                <p>Production starts at <code class="mono">get</code>, <code class="mono">describe</code>,
+                  <code class="mono">logs</code>. Anything that mutates a live cluster is named and
+                  confirmed — including for the tools I build.</p>
+              </article>
+              <article class="principle">
+                <span class="principle__n">03</span>
+                <h3>Deterministic core, narrating edge</h3>
+                <p>Code computes the evidence; the model interprets it. A number the LLM derived
+                  itself is a number nobody can reproduce.</p>
+              </article>
+              <article class="principle">
+                <span class="principle__n">04</span>
+                <h3>Keep the model on our hardware</h3>
+                <p>Self-hosted inference is not a cost exercise. It is what lets an investigation
+                  read production telemetry without shipping it to a third party.</p>
+              </article>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 02 · Work ═══ -->
+    <section class="section" id="work">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-reveal><span class="idx">02</span> — git log --career</span>
+          <h2 data-reveal>Deployment history.</h2>
+        </div>
+
+        <!-- career as a commit graph — the two branches are the two
+             migrations, run in opposite directions -->
+        <div class="gitgraph" data-reveal>
+          <div class="gitgraph__cap"><span class="d"></span>git log --graph --career · hover a commit</div>
+          <svg viewBox="0 0 936 230" fill="none" role="img"
+            aria-label="Career as a git graph: DXC 2021, Revent Labs 2022 with an on-premises to EKS branch, Krista 2024 with an EKS to on-premises branch, merging at HEAD">
+
+            <!-- main branch -->
+            <path class="g-line g-main" d="M40 115 H 860" />
+
+            <!-- branch up: on-prem → EKS (Revent Labs) -->
+            <path class="g-line g-branch"
+              d="M330 115 C 380 115, 385 55, 435 55 H 520 C 570 55, 575 115, 625 115" />
+            <path class="g-flow"
+              d="M330 115 C 380 115, 385 55, 435 55 H 520 C 570 55, 575 115, 625 115" pathLength="1" />
+
+            <!-- branch down: EKS → on-prem, private cloud (Krista) -->
+            <path class="g-line g-branch"
+              d="M625 115 C 675 115, 680 178, 730 178 H 780 C 815 178, 820 115, 850 115" />
+            <path class="g-flow"
+              d="M625 115 C 675 115, 680 178, 730 178 H 780 C 815 178, 820 115, 850 115" pathLength="1" />
+
+            <!-- commits on main -->
+            <g class="g-commit" data-cursor="a1c0de5">
+              <circle class="g-hit" cx="120" cy="115" r="26" />
+              <circle class="g-c" cx="120" cy="115" r="7" />
+              <text class="g-t" x="120" y="145" text-anchor="middle">Jul 2021 · DXC Technology</text>
+              <text class="g-t g-t--dim" x="120" y="161" text-anchor="middle">100+ workloads · aws eks</text>
+            </g>
+
+            <g class="g-commit" data-cursor="b2e7a1f">
+              <circle class="g-hit" cx="330" cy="115" r="26" />
+              <circle class="g-c g-c--acc" cx="330" cy="115" r="7" />
+              <text class="g-t" x="330" y="145" text-anchor="middle">Dec 2022 · Revent Labs</text>
+              <text class="g-t g-t--dim" x="330" y="161" text-anchor="middle">checkout -b feat/to-cloud</text>
+            </g>
+
+            <g class="g-commit" data-cursor="c3f0000">
+              <circle class="g-hit" cx="625" cy="115" r="26" />
+              <circle class="g-c g-c--acc" cx="625" cy="115" r="7" />
+              <text class="g-t" x="625" y="98" text-anchor="middle">Oct 2024 · Krista AI</text>
+            </g>
+
+            <!-- branch-up commit -->
+            <g class="g-commit" data-cursor="add5afe">
+              <circle class="g-hit" cx="477" cy="55" r="26" />
+              <circle class="g-c g-c--acc" cx="477" cy="55" r="7" />
+              <text class="g-t" x="477" y="34" text-anchor="middle">on-prem → EKS</text>
+              <text class="g-t g-t--dim" x="477" y="78" text-anchor="middle">terraform · terragrunt · multi-region</text>
+            </g>
+
+            <!-- branch-down commit -->
+            <g class="g-commit" data-cursor="dec0ded">
+              <circle class="g-hit" cx="755" cy="178" r="26" />
+              <circle class="g-c g-c--acc" cx="755" cy="178" r="7" />
+              <text class="g-t" x="755" y="204" text-anchor="middle">EKS → on-prem</text>
+              <text class="g-t g-t--dim" x="755" y="220" text-anchor="middle">private cloud, built from the metal</text>
+            </g>
+
+            <!-- HEAD -->
+            <g class="g-commit" data-cursor="HEAD → now">
+              <circle class="g-hit" cx="860" cy="115" r="28" />
+              <circle class="g-c g-c--acc" cx="860" cy="115" r="8" />
+              <circle class="g-ring" cx="860" cy="115" r="8" />
+              <g class="g-tag">
+                <rect x="788" y="70" width="126" height="26" rx="13" />
+                <text x="851" y="87" text-anchor="middle">HEAD · shipping</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <div class="timeline">
+
+          <article class="release" data-reveal>
+            <div class="release__aside">
+              <span class="release__tag">release/2024.10 — HEAD</span>
+              <h3 class="release__co">Krista AI</h3>
+              <p class="release__what">enterprise AI automation platform</p>
+              <p class="release__period">Oct 2024 → present · Pune, Hybrid</p>
+            </div>
+            <div class="release__main">
+              <h4 class="release__role">DevOps Engineer <span class="now">now</span></h4>
+              <p class="release__sum">
+                Own a <span class="hl">hybrid Kubernetes platform</span> spanning managed clusters
+                on AWS and bare-metal RKE2 on-premises — and led the migration of production
+                <span class="hl">off EKS and onto our own Kubernetes</span>, building the private
+                cloud underneath it.
+              </p>
+              <ul class="role__points">
+                <li><b>Private cloud, built from the metal up.</b> Stood up the data-centre platform
+                  that replaced what EKS had been providing — compute, storage classes, load
+                  balancing, container registry, secrets and ingress — so production runs on
+                  hardware we own and can upgrade without a maintenance window.</li>
+                <li><b>Kubernetes lifecycle, both worlds.</b> Control-plane and worker provisioning,
+                  etcd health and backups, rolling upgrades, certificate rotation, and the deep
+                  troubleshooting that lands on the API server, scheduler, kubelet, CoreDNS and the
+                  CNI — across RKE2 on bare metal and Amazon EKS.</li>
+                <li><b>AWS, as code.</b> Multi-region workloads with VPCs, subnets, IAM, node groups
+                  and supporting services in reusable Terraform and Terragrunt modules; ECR for
+                  images, and cost kept honest through rightsizing, storage lifecycle policies and
+                  idle-resource cleanup.</li>
+                <li><b>Networking that spans both sides.</b> CNI and CoreDNS on bare metal, ingress
+                  controllers and load balancing, network policies and multi-tenant namespace
+                  isolation, and the firewall and routing work that hybrid connectivity actually
+                  needs.</li>
+                <li><b>Delivery, declarative end to end.</b> Jenkins from
+                  <span class="hl">JCasC</span> — controllers, plugins, credentials and jobs as YAML
+                  in Git — plus GitHub Actions, GitLab CI and Bitbucket Pipelines inside Kubernetes,
+                  JFrog Artifactory for artifact promotion, Helm and Kustomize for packaging, and
+                  GitOps on ArgoCD and FluxCD with rollbacks that work.</li>
+                <li><b>AI and GPU infrastructure.</b> Self-hosted LLM inference on on-premises GPU
+                  compute — model serving, GPU utilization, inference performance, context
+                  management and tool-calling — and Krista XRay, the AI-powered SRE platform built
+                  on top of it. Extending into Kubernetes orchestration for GPU workloads.</li>
+                <li><b>Observability and on-call.</b> Prometheus, Grafana, SigNoz, OpenTelemetry and
+                  ELK/EFK for metrics, logs and traces, with the dashboards and alerting incident
+                  response runs on, escalating through PagerDuty.</li>
+                <li><b>PostgreSQL on RAM-backed storage.</b> Moved database volumes for ephemeral
+                  environments onto RAM-backed storage so the disk stopped being the bottleneck —
+                  environment provisioning and test cycles that used to be a coffee break now finish
+                  while you are still looking at the screen.</li>
+                <li><b>Operators, secrets and access.</b> Sealed Secrets, KEDA and the Prometheus
+                  Operator — CRD lifecycle, upgrades and reconciliation failures — with HashiCorp
+                  Vault, RBAC and least-privilege IAM throughout, and production read-only by
+                  default.</li>
+              </ul>
+              <div class="release__chips chips" data-stagger>
+                <span class="kchip"><span class="d"></span>RKE2</span>
+                <span class="kchip"><span class="d"></span>Amazon EKS</span>
+                <span class="kchip"><span class="d"></span>Private cloud</span>
+                <span class="kchip"><span class="d"></span>Terraform</span>
+                <span class="kchip"><span class="d"></span>Terragrunt</span>
+                <span class="kchip"><span class="d"></span>Ansible</span>
+                <span class="kchip"><span class="d"></span>Jenkins · JCasC</span>
+                <span class="kchip"><span class="d"></span>ArgoCD</span>
+                <span class="kchip"><span class="d"></span>FluxCD</span>
+                <span class="kchip"><span class="d"></span>Helm</span>
+                <span class="kchip"><span class="d"></span>GPU / LLM serving</span>
+                <span class="kchip"><span class="d"></span>SigNoz</span>
+                <span class="kchip"><span class="d"></span>PagerDuty</span>
+                <span class="kchip"><span class="d"></span>Vault</span>
+                <span class="kchip"><span class="d"></span>Python</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="release" data-reveal>
+            <div class="release__aside">
+              <span class="release__tag">release/2022.12</span>
+              <h3 class="release__co">Revent Labs</h3>
+              <p class="release__period">Dec 2022 → Sep 2024</p>
+            </div>
+            <div class="release__main">
+              <h4 class="release__role">SDE-1 · cloud &amp; platform</h4>
+              <p class="release__sum">
+                Migrated <span class="hl">on-premises workloads onto AWS EKS</span> and ran the
+                AWS and GCP estates behind them — the whole footprint as reusable Terraform and
+                Terragrunt modules, replicated across <span class="hl">multiple regions</span> for
+                rapid failover.
+              </p>
+              <ul class="role__points">
+                <li><b>On-premises to EKS.</b> Planned and executed the move of workloads off
+                  on-premises infrastructure onto Amazon EKS, standing up the networking, IAM, node
+                  groups and delivery path in the target account before cutting over.</li>
+                <li><b>Infrastructure as code, region-portable.</b> Reusable Terraform modules
+                  composed with Terragrunt so an environment could be replicated into another region
+                  from the same source — the thing that made rapid failover realistic rather than
+                  theoretical.</li>
+                <li><b>AWS breadth.</b> VPC, IAM, EC2, ELB, ASG, EKS, ECS, ECR, EBS, S3, RDS and
+                  Aurora, Route&nbsp;53, Lambda, CloudWatch, SQS, SNS and Secrets Manager, built for
+                  high availability, security and scale.</li>
+                <li><b>GCP breadth.</b> VPC, Compute Engine, IAM, firewalls, GKE, Artifact Registry,
+                  GCS, Cloud SQL, Cloud Logging, Pub/Sub, Cloud Functions, load balancing and Secret
+                  Manager.</li>
+                <li><b>Database migrations.</b> Led Amazon RDS to Aurora Serverless, implemented a
+                  global RDS cluster, and moved MongoDB to Atlas — each for scalability and
+                  performance headroom rather than for its own sake.</li>
+                <li><b>Kubernetes delivery and autoscaling.</b> EKS managed through FluxCD, ArgoCD
+                  and Helmfile, improving deployment frequency, with HPA, VPA and KEDA tuning
+                  cluster behaviour to actual load.</li>
+                <li><b>CI/CD pipelines.</b> GitHub Actions and Jenkins, integrated with Jira for
+                  traceability and SonarQube for code quality gates.</li>
+                <li><b>Monitoring and logging.</b> CloudWatch, Grafana, Loki, Promtail and the EFK
+                  and PLG stacks, with alerting built to cut response time, and Helm-based
+                  deployments configured for high availability.</li>
+                <li><b>Secrets management.</b> HashiCorp Vault, Sealed Secrets and the External
+                  Secrets Operator, wired into AWS and GCP Secrets Manager so nothing sensitive
+                  lived in a manifest.</li>
+                <li><b>Automation and legacy migration.</b> Ansible playbooks, roles and collections
+                  driven from GitHub Actions for end-to-end deployment and testing, plus a migration
+                  of RightScale RightScripts to equivalent Terraform configurations and Ansible
+                  roles.</li>
+                <li><b>Cost optimization.</b> Route&nbsp;53, Transit Gateway and AWS Organizations
+                  managed down to what the business actually needed.</li>
+              </ul>
+              <div class="release__chips chips" data-stagger>
+                <span class="kchip"><span class="d"></span>AWS</span>
+                <span class="kchip"><span class="d"></span>GCP · GKE</span>
+                <span class="kchip"><span class="d"></span>Terraform</span>
+                <span class="kchip"><span class="d"></span>Terragrunt</span>
+                <span class="kchip"><span class="d"></span>Amazon EKS</span>
+                <span class="kchip"><span class="d"></span>Aurora Serverless</span>
+                <span class="kchip"><span class="d"></span>MongoDB Atlas</span>
+                <span class="kchip"><span class="d"></span>Helmfile</span>
+                <span class="kchip"><span class="d"></span>ArgoCD · FluxCD</span>
+                <span class="kchip"><span class="d"></span>HPA · VPA · KEDA</span>
+                <span class="kchip"><span class="d"></span>GitHub Actions</span>
+                <span class="kchip"><span class="d"></span>SonarQube</span>
+                <span class="kchip"><span class="d"></span>Loki · PLG</span>
+                <span class="kchip"><span class="d"></span>Vault · ESO</span>
+                <span class="kchip"><span class="d"></span>Ansible</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="release" data-reveal>
+            <div class="release__aside">
+              <span class="release__tag">release/2021.07</span>
+              <h3 class="release__co">DXC Technology</h3>
+              <p class="release__period">Jul 2021 → Nov 2022 · Remote</p>
+            </div>
+            <div class="release__main">
+              <h4 class="release__role">Associate Software Engineer</h4>
+              <p class="release__sum">
+                Managed production Kubernetes on <span class="hl">AWS EKS carrying 100+
+                workloads</span> for enterprise client environments, specialising in critical
+                production troubleshooting.
+              </p>
+              <ul class="role__points">
+                <li><b>EKS cluster management at scale.</b> Ran production clusters carrying 100+
+                  workloads, keeping resource utilization and platform stability in hand, and became
+                  the person critical Kubernetes production issues got escalated to.</li>
+                <li><b>Helm-based delivery.</b> Developed and maintained Helm charts for application
+                  deployment onto EKS, making releases consistent and repeatable instead of
+                  hand-assembled per environment.</li>
+                <li><b>Multistage Dockerfiles.</b> Designed image builds that package an application
+                  and its dependencies while keeping the runtime layer to what actually runs — the
+                  same image behaving identically across development, test and production.</li>
+                <li><b>Ingress and network policy.</b> Configured Nginx and Traefik ingress
+                  controllers for application traffic, with Cilium and Calico network policies
+                  enforcing workload isolation and tightening the cluster's network posture.</li>
+                <li><b>Observability and alerting.</b> Built and maintained Grafana alerts covering
+                  system health, so infrastructure and application problems reached the SysOps team
+                  before users noticed them.</li>
+                <li><b>Cost optimization.</b> Cut AWS spend across multiple client projects using
+                  Kubecost for per-workload visibility across EKS, alongside traffic optimization
+                  through Traefik ingress.</li>
+                <li><b>Automation.</b> Reusable Bash tooling for testing procedures, removing manual
+                  effort and making results consistent run to run.</li>
+              </ul>
+              <div class="release__chips chips" data-stagger>
+                <span class="kchip"><span class="d"></span>AWS</span>
+                <span class="kchip"><span class="d"></span>Amazon EKS</span>
+                <span class="kchip"><span class="d"></span>Kubernetes</span>
+                <span class="kchip"><span class="d"></span>Helm</span>
+                <span class="kchip"><span class="d"></span>Docker</span>
+                <span class="kchip"><span class="d"></span>Grafana</span>
+                <span class="kchip"><span class="d"></span>Nginx · Traefik</span>
+                <span class="kchip"><span class="d"></span>Cilium · Calico</span>
+                <span class="kchip"><span class="d"></span>Kubecost</span>
+                <span class="kchip"><span class="d"></span>Bash</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══ 03 · Stack ═══ -->
+    <section class="section" id="stack">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-reveal><span class="idx">03</span> — cat stack.yaml</span>
+          <h2 data-reveal>The toolchain, declared.</h2>
+        </div>
+
+        <div class="stack-stage" data-reveal>
+          <figure class="spec" id="spec">
+            <figcaption>
+              <span class="d"></span>
+              <span class="path">infra/</span>stack.yaml
+              <span class="spec__hint">hover a card ↓</span>
+            </figcaption>
+            <pre><span class="ln"><span class="no">1</span><span class="k">stack</span><span class="p">:</span></span><span class="ln" data-key="platform"><span class="no">2</span>  <span class="k">platform</span><span class="p">:</span>      <span class="p">[</span><span class="v">rke2</span><span class="p">,</span> <span class="v">eks</span><span class="p">,</span> <span class="v">gke</span><span class="p">,</span> <span class="v">bare-metal</span><span class="p">,</span> <span class="v">etcd</span><span class="p">,</span> <span class="v">cni</span><span class="p">,</span> <span class="v">helm</span><span class="p">,</span> <span class="v">private-cloud</span><span class="p">]</span></span><span class="ln" data-key="cloud"><span class="no">3</span>  <span class="k">cloud</span><span class="p">:</span>         <span class="p">[</span><span class="v">aws</span><span class="p">,</span> <span class="v">gcp</span><span class="p">,</span> <span class="v">on-prem</span><span class="p">,</span> <span class="v">multi-region</span><span class="p">]</span></span><span class="ln" data-key="iac"><span class="no">4</span>  <span class="k">iac</span><span class="p">:</span>           <span class="p">[</span><span class="v">terraform</span><span class="p">,</span> <span class="v">terragrunt</span><span class="p">,</span> <span class="v">ansible</span><span class="p">,</span> <span class="v">helmfile</span><span class="p">]</span></span><span class="ln" data-key="delivery"><span class="no">5</span>  <span class="k">delivery</span><span class="p">:</span>      <span class="p">[</span><span class="v">argocd</span><span class="p">,</span> <span class="v">fluxcd</span><span class="p">,</span> <span class="v">jenkins-jcasc</span><span class="p">,</span> <span class="v">gh-actions</span><span class="p">,</span> <span class="v">gitlab-ci</span><span class="p">,</span> <span class="v">artifactory</span><span class="p">]</span></span><span class="ln" data-key="scaling"><span class="no">6</span>  <span class="k">scaling</span><span class="p">:</span>       <span class="p">[</span><span class="v">hpa</span><span class="p">,</span> <span class="v">vpa</span><span class="p">,</span> <span class="v">keda</span><span class="p">,</span> <span class="v">cluster-autoscaler</span><span class="p">]</span></span><span class="ln" data-key="observability"><span class="no">7</span>  <span class="k">observability</span><span class="p">:</span> <span class="p">[</span><span class="v">prometheus</span><span class="p">,</span> <span class="v">grafana</span><span class="p">,</span> <span class="v">signoz</span><span class="p">,</span> <span class="v">otel</span><span class="p">,</span> <span class="v">loki</span><span class="p">,</span> <span class="v">elk</span><span class="p">,</span> <span class="v">pagerduty</span><span class="p">]</span></span><span class="ln" data-key="security"><span class="no">8</span>  <span class="k">security</span><span class="p">:</span>      <span class="p">[</span><span class="v">trivy</span><span class="p">,</span> <span class="v">vault</span><span class="p">,</span> <span class="v">sealed-secrets</span><span class="p">,</span> <span class="v">eso</span><span class="p">,</span> <span class="v">rbac</span><span class="p">,</span> <span class="v">network-policy</span><span class="p">]</span></span><span class="ln" data-key="compliance"><span class="no">9</span>  <span class="k">compliance</span><span class="p">:</span>    <span class="p">[</span><span class="v">soc2</span><span class="p">,</span> <span class="v">hipaa</span><span class="p">,</span> <span class="v">data-residency</span><span class="p">,</span> <span class="v">audit-trail</span><span class="p">]</span></span><span class="ln" data-key="ai"><span class="no">10</span>  <span class="k">ai</span><span class="p">:</span>            <span class="p">[</span><span class="v">self-hosted-llm</span><span class="p">,</span> <span class="v">gpu-inference</span><span class="p">,</span> <span class="v">mcp</span><span class="p">,</span> <span class="v">tool-calling</span><span class="p">]</span></span><span class="ln" data-key="code"><span class="no">11</span>  <span class="k">code</span><span class="p">:</span>          <span class="p">[</span><span class="v">python</span><span class="p">,</span> <span class="v">fastapi</span><span class="p">,</span> <span class="v">bash</span><span class="p">,</span> <span class="v">groovy</span><span class="p">,</span> <span class="v">react</span><span class="p">]</span></span><span class="ln" data-key="data"><span class="no">12</span>  <span class="k">data</span><span class="p">:</span>          <span class="p">[</span><span class="v">postgres</span><span class="p">,</span> <span class="v">mysql</span><span class="p">,</span> <span class="v">mongodb</span><span class="p">,</span> <span class="v">redis</span><span class="p">,</span> <span class="v">clickhouse</span><span class="p">,</span> <span class="v">ram-backed-pg</span><span class="p">]</span></span><span class="ln"><span class="no">13</span></span><span class="ln"><span class="no">14</span><span class="k">mode</span><span class="p">:</span> <span class="v">read_only_by_default</span>  <span class="c"># deterministic core · narrating edge</span></span></pre>
+          </figure>
+
+          <div class="stack-cards" data-stagger>
+            <article class="stack-card" data-keys="platform,cloud">
+              <span class="stack-card__k">run</span>
+              <strong>Clusters &amp; cloud</strong>
+              <p>RKE2 on bare metal, private cloud, Amazon EKS, GKE, etcd, CNI, Helm, AWS, GCP</p>
+            </article>
+            <article class="stack-card" data-keys="iac,delivery">
+              <span class="stack-card__k">ship</span>
+              <strong>IaC &amp; GitOps</strong>
+              <p>Terraform, Terragrunt, Ansible, Helmfile, ArgoCD, FluxCD, Jenkins JCasC, Artifactory</p>
+            </article>
+            <article class="stack-card" data-keys="security,compliance">
+              <span class="stack-card__k">secure</span>
+              <strong>DevSecOps &amp; compliance</strong>
+              <p>Trivy scanning, Vault, Sealed Secrets, ESO, RBAC, network policy, SOC 2, HIPAA</p>
+            </article>
+            <article class="stack-card" data-keys="observability">
+              <span class="stack-card__k">observe</span>
+              <strong>Telemetry</strong>
+              <p>Prometheus, Grafana, SigNoz, OpenTelemetry, Loki, ELK/EFK, PagerDuty on-call</p>
+            </article>
+            <article class="stack-card" data-keys="ai">
+              <span class="stack-card__k">reason</span>
+              <strong>AI &amp; GPU</strong>
+              <p>Self-hosted LLM serving, on-prem GPU inference, MCP, tool-calling, guardrails</p>
+            </article>
+            <article class="stack-card" data-keys="code,data,scaling">
+              <span class="stack-card__k">build</span>
+              <strong>Code &amp; data</strong>
+              <p>Python, FastAPI, Bash, Groovy, React, Postgres on RAM-backed storage, Redis, ClickHouse</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 04 · XRay ═══ -->
+    <section class="section" id="xray">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-reveal><span class="idx">04</span> — the thing I built</span>
+          <h2 data-reveal>Software, not configuration.</h2>
+        </div>
+
+        <article class="case" data-reveal>
+          <div class="case__head">
+            <h3>Krista XRay</h3>
+            <span class="tag tag--ok">in production</span>
+            <span class="case__role">sole designer and developer</span>
+          </div>
+
+          <div class="case__body">
+            <div class="case__prose">
+              <p class="lead-big" style="margin-bottom:1rem">
+                At 3 a.m., "the app is slow" used to mean opening four consoles and hoping somebody
+                remembered what changed. <span class="dim">Now it means asking one question and
+                getting evidence back.</span>
+              </p>
+
+              <p>
+                XRay is an AI-powered SRE platform that answers <em>why is production slow or
+                broken?</em> It pulls from nine telemetry sources — Kubernetes, traces, logs,
+                metrics, the data tier and the cloud APIs — correlates them on a shared timeline,
+                works out what changed, ranks the probable causes, and explains the top ones in
+                plain language with the evidence attached.
+              </p>
+
+              <div class="rule" style="margin:1.6rem 0 1rem">what it changes</div>
+
+              <ul class="benefits">
+                <li><b>The correlation nobody has time for.</b> A human comparing a latency spike
+                  against deploy history, node pressure, slow queries and cache eviction is doing
+                  ten minutes of tab-switching under pressure. The platform does it on every
+                  investigation, the same way each time.</li>
+                <li><b>Change detection first.</b> Most incidents are something that changed.
+                  Surfacing rollouts, config edits and scaling events in the same window as the
+                  symptom answers a large share of them outright.</li>
+                <li><b>Findings you can check.</b> Every claim carries the query and the series it
+                  came from, so the reviewer can disagree with the tool instead of trusting it.</li>
+                <li><b>On-call that doesn't depend on who is awake.</b> The knowledge lives in
+                  ranked hypotheses rather than in the one engineer who remembers this failure
+                  mode.</li>
+                <li><b>Nothing leaves the estate.</b> Investigations can run entirely against
+                  self-hosted models on our own GPUs, which is what makes it usable where data
+                  residency rules out sending telemetry to a third party.</li>
+              </ul>
+
+              <div class="rule" style="margin:1.6rem 0 1rem">how it stays trustworthy</div>
+
+              <div class="decisions" data-stagger>
+                <div class="decision">
+                  <h4>deterministic core</h4>
+                  <p>Python computes every number; the model only interprets. It cannot invent a
+                    latency figure because it never calculates one.</p>
+                </div>
+                <div class="decision">
+                  <h4>read-only by construction</h4>
+                  <p>All 16 tools are read-only and the service accounts are RBAC-scoped. There is
+                    no code path from a model output to a cluster write.</p>
+                </div>
+                <div class="decision">
+                  <h4>rank before you reason</h4>
+                  <p>A dependency graph scores probable causes first, so the model argues about a
+                    shortlist instead of trawling raw telemetry.</p>
+                </div>
+                <div class="decision">
+                  <h4>degrade loudly</h4>
+                  <p>A collector that can't reach its backend says so. Silently dropping a source
+                    lets you reason confidently from a hole in the evidence.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="case__side">
+              <div class="asks">
+                <span class="asks__cap">questions it answers</span>
+                <ul>
+                  <li>Why is checkout slow since 02:10?</li>
+                  <li>What changed in the last hour?</li>
+                  <li>Is this the app, the cluster, or the database?</li>
+                  <li>Which service started this, and which are just downstream of it?</li>
+                  <li>Has this failed this way before?</li>
+                </ul>
+              </div>
+
+              <div class="flow">
+                <span class="flow__cap">one investigation</span>
+                <ol class="flow__steps">
+                  <li>
+                    <b>Symptom</b>
+                    <span>asked in plain language, not assembled from dashboards</span>
+                  </li>
+                  <li>
+                    <b>Collect</b>
+                    <span>nine sources queried in parallel, each degrading independently</span>
+                  </li>
+                  <li>
+                    <b>Correlate</b>
+                    <span>normalised onto one timeline; change detection over the same window</span>
+                  </li>
+                  <li>
+                    <b>Rank</b>
+                    <span>dependency graph scores candidate causes before any model sees them</span>
+                  </li>
+                  <li>
+                    <b>Explain</b>
+                    <span>agentic loop over 16 read-only tools, evidence cited per claim</span>
+                  </li>
+                </ol>
+              </div>
+
+              <p class="stack-line">
+                <b>reads</b> Kubernetes · Prometheus · traces · logs · Postgres · Redis · cloud APIs<br>
+                <b>backend</b> Python · FastAPI · Pydantic · async httpx<br>
+                <b>frontend</b> React · Vite<br>
+                <b>runtime</b> Docker · Kubernetes · RBAC-scoped service accounts<br>
+                <b>inference</b> hosted API or self-hosted on on-prem GPUs · MCP
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══ 05 · DevSecOps ═══ -->
+    <section class="section" id="security">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-reveal><span class="idx">05</span> — shift left</span>
+          <h2 data-reveal>Security in the pipeline,<br>not in a review meeting.</h2>
+          <p data-reveal>Guardrails belong on the delivery path itself. If a vulnerable image or a
+            plaintext secret can only be caught by a person remembering to look, it will ship.</p>
+        </div>
+
+        <!-- gates a change passes through -->
+        <div class="gates" data-stagger data-reveal>
+          <article class="gate">
+            <span class="gate__n">01</span>
+            <h3>Commit</h3>
+            <p>Secrets never reach Git in the clear — Sealed Secrets and the External Secrets
+              Operator keep them encrypted at rest, with Vault and cloud Secrets Manager as the
+              source of truth.</p>
+            <div class="chips">
+              <span class="kchip"><span class="d"></span>Vault</span>
+              <span class="kchip"><span class="d"></span>Sealed Secrets</span>
+              <span class="kchip"><span class="d"></span>ESO</span>
+            </div>
+          </article>
+
+          <article class="gate">
+            <span class="gate__n">02</span>
+            <h3>Build &amp; scan</h3>
+            <p>Trivy scans images and IaC in CI, so a known CVE fails the pipeline instead of
+              landing in a cluster. Multi-stage builds keep the runtime image down to what actually
+              runs, and SonarQube guards code quality on the way through.</p>
+            <div class="chips">
+              <span class="kchip"><span class="d"></span>Trivy</span>
+              <span class="kchip"><span class="d"></span>image &amp; IaC scanning</span>
+              <span class="kchip"><span class="d"></span>multi-stage builds</span>
+              <span class="kchip"><span class="d"></span>SonarQube</span>
+            </div>
+          </article>
+
+          <article class="gate">
+            <span class="gate__n">03</span>
+            <h3>Deploy</h3>
+            <p>Git is the only way in. GitOps means every change to a cluster is a reviewed commit
+              with an audit trail and a rollback, and least-privilege IAM plus RBAC decide what a
+              workload may touch once it is there.</p>
+            <div class="chips">
+              <span class="kchip"><span class="d"></span>GitOps audit trail</span>
+              <span class="kchip"><span class="d"></span>RBAC</span>
+              <span class="kchip"><span class="d"></span>least-privilege IAM</span>
+            </div>
+          </article>
+
+          <article class="gate">
+            <span class="gate__n">04</span>
+            <h3>Run</h3>
+            <p>Workload isolation with network policies and multi-tenant namespace boundaries;
+              production access read-only by default. Sensitive environments are separated at
+              cluster level, not just by namespace.</p>
+            <div class="chips">
+              <span class="kchip"><span class="d"></span>network policy</span>
+              <span class="kchip"><span class="d"></span>Cilium · Calico</span>
+              <span class="kchip"><span class="d"></span>tenant isolation</span>
+              <span class="kchip"><span class="d"></span>read-only prod</span>
+            </div>
+          </article>
+        </div>
+
+        <!-- compliance posture -->
+        <div class="posture" data-reveal>
+          <div class="posture__head">
+            <span class="eyebrow"><span class="idx">05a</span> — compliance posture</span>
+            <h3>Building for audited environments.</h3>
+            <p>Enterprise customers arrive with a security questionnaire before they arrive with a
+              workload. Designing for that up front is cheaper than retrofitting it.</p>
+          </div>
+          <div class="posture__grid">
+            <article class="posture__item">
+              <span class="tag tag--acc">SOC 2</span>
+              <p>Change management with a reviewable trail, least-privilege access, and logging and
+                monitoring evidence that an auditor can actually be shown.</p>
+            </article>
+            <article class="posture__item">
+              <span class="tag tag--acc">HIPAA</span>
+              <p>Encryption in transit and at rest, tightly scoped access to sensitive workloads,
+                and tenant separation strong enough that neighbours cannot see each other.</p>
+            </article>
+            <article class="posture__item">
+              <span class="tag tag--acc">Data residency</span>
+              <p>Dedicated single-tenant environments in the customer's own region, and self-hosted
+                inference so telemetry and prompts never leave the estate.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 06 · Proof ═══ -->
+    <section class="section" id="proof">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow" data-reveal><span class="idx">06</span> — ls -la credentials/</span>
+          <h2 data-reveal>Proof, not promises.</h2>
+        </div>
+
+        <div data-stagger data-reveal>
+          <div class="crow">
+            <span class="crow__issuer">AWS</span>
+            <span class="crow__name">Certified Solutions Architect – Associate (SAA-C03)
+              <span class="id">credential 1709bca43d4f43f29147866f53f1278b</span></span>
+            <span class="crow__dates">Jun 2024 → Jun 2027 <span class="tag tag--ok">active</span></span>
+          </div>
+          <div class="crow">
+            <span class="crow__issuer">Linux&nbsp;F.</span>
+            <span class="crow__name">Certified Kubernetes Administrator (CKA)</span>
+            <span class="crow__dates">Feb 2022 → Feb 2025 <span class="tag tag--dim">expired</span></span>
+          </div>
+        </div>
+
+        <div class="edu" data-reveal>
+          <div>
+            <div class="edu__deg">Bachelor of Engineering — Computer Science</div>
+            <div class="edu__school">Dr. D. Y. Patil Institute of Technology, Pimpri, Pune · CGPA 7.52</div>
+          </div>
+          <span class="edu__years">2017 → 2021</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 07 · Contact ═══ -->
+    <section class="section" id="contact">
+      <div class="container">
+        <span class="eyebrow" data-reveal><span class="idx">07</span> — ping sachin</span>
+        <h2 class="contact__title" data-reveal>Running Kubernetes<br>
+          <span class="grad">somewhere interesting?</span></h2>
+        <p class="lead" data-reveal style="max-width:52ch">
+          Open to <span class="hl">DevOps Engineer</span>, SRE, platform engineering and
+          AI-infrastructure roles, senior level. Happy to talk bare metal, either migration
+          direction, GPU inference, or how XRay is put together.
+        </p>
+
+        <div class="contact__actions" data-reveal>
+          <a class="btn btn--primary btn--lg magnetic" href="mailto:sachinvasle99@gmail.com" data-cursor="send">
+            Email me
+            <svg class="btn__ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </a>
+          <a class="btn btn--ghost btn--lg" href="https://www.linkedin.com/in/sachin-vasle-a631bb194/"
+            target="_blank" rel="noopener" data-cursor="open">
+            <svg class="btn__ico" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13M7.12 20.45H3.56V9h3.56z" />
+            </svg>
+            LinkedIn
+          </a>
+          <a class="btn btn--ghost btn--lg" href="https://github.com/sachinvasle99" target="_blank" rel="noopener"
+            data-cursor="open">
+            <svg class="btn__ico" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.55v-1.94c-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.97.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.4-5.26 5.69.42.36.79 1.07.79 2.16v3.2c0 .3.2.66.8.55A11.5 11.5 0 0 0 23.5 12A11.5 11.5 0 0 0 12 .5z" />
+            </svg>
+            GitHub
+          </a>
+        </div>
+
+        <div data-reveal>
+          <button class="copyline" id="copyEmail" data-copy="sachinvasle99@gmail.com" data-cursor="copy" type="button"
+            aria-live="polite">
+            <span class="p">$</span>
+            <span class="addr">echo sachinvasle99@gmail.com | pbcopy</span>
+            <span class="ok">✓ copied to clipboard</span>
+          </button>
+        </div>
+
+        <div class="contact__meta" data-reveal>
+          <span>base: Pune, Maharashtra, IN</span>
+          <span>tz: IST · UTC+05:30</span>
+          <span>local: <span class="tnum" data-clock>00:00:00</span></span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══ Footer ═══ -->
+  <footer class="site-footer">
+    <div class="container footer__row">
+      <a class="footer__brand" href="#hero" data-cursor="top">
+        <span class="brand__mark">SV</span> Sachin Vasle
+      </a>
+      <span class="footer__mono">© 2026 · deployed from Pune · status:
+        <span class="text-accent">operational</span></span>
+      <div class="footer__links">
+        <a href="https://www.linkedin.com/in/sachin-vasle-a631bb194/" target="_blank" rel="noopener"
+          data-cursor="open">LinkedIn</a>
+        <a href="assets/Sachin_Vasle_Resume.pdf" download data-cursor="open">Résumé</a>
+        <a href="notes/waf-blocks-promql-aggregations.html" data-cursor="open">Notes</a>
+        <a href="mailto:sachinvasle99@gmail.com" data-cursor="send">Email</a>
+        <a href="#hero" data-cursor="top">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="req/js/preloader.js" defer></script>
+  <script src="req/js/main.js" defer></script>
+  <script src="req/js/cursor.js" defer></script>
+</body>
+
+</html>
