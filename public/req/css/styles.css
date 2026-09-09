@@ -931,6 +931,32 @@ body.has-cursor .cursor.is-visible { opacity: 1; }
 }
 .release__sum { font-size: 0.98rem; color: var(--ink-soft); margin-bottom: 1rem; max-width: 70ch; }
 
+/* results — the R in STAR, kept visually distinct from the tech chips
+ * so an outcome never reads as just another tool name */
+.outcomes {
+  margin: 0.2rem 0 1.1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line-soft);
+  border-left: 2px solid var(--ok);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  background: var(--surface);
+}
+.outcomes__cap {
+  display: block; margin-bottom: 0.55rem;
+  font-family: var(--font-mono); font-size: 0.64rem;
+  letter-spacing: 0.13em; text-transform: uppercase; color: var(--ok);
+}
+.outcomes ul { display: grid; gap: 0.42rem; }
+.outcomes li {
+  position: relative; padding-left: 1.2rem;
+  font-size: 0.9rem; color: var(--ink-soft); line-height: 1.45;
+}
+.outcomes li::before {
+  content: '→'; position: absolute; left: 0; top: 0;
+  font-family: var(--font-mono); font-size: 0.8rem; color: var(--ok);
+}
+.outcomes b { color: var(--ink); font-weight: 600; }
+
 /* highlighted specifics under a role summary */
 .role__points { display: grid; gap: 0.6rem; }
 .role__points li {
