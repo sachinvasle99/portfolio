@@ -1,4 +1,6 @@
-Drop the résumé PDF here as `Sachin_Vasle_Rajput_Resume.pdf`.
+`Sachin_Vasle_Resume.pdf` is served publicly and linked from the hero button and the
+footer. Replace the file in place to update it — the filename is referenced in
+`public/index.html`, so keep the name.
 
-The hero button and the footer link both point at that exact filename. Source documents
-live in `../../resumes/`.
+Note it contains a phone number and personal email, both readable by anyone who
+downloads it. Source documents live in `../../../resumes/`.

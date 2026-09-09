@@ -58,8 +58,6 @@ JS off, broken, or slow, nothing is invisible.
 
 The page carries `TODO` comments at each of these:
 
-- **Résumé PDF** — `assets/Sachin_Vasle_Resume.pdf` is linked from the hero and the footer
-  but is not in the repo yet.
 - **RAM-backed PostgreSQL** — the speed-up is described qualitatively in the Work section
   because the real before/after numbers are unknown. A concrete figure there would be the most
   quotable metric on the page.
