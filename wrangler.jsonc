@@ -6,16 +6,29 @@
   // The site lives in public/ rather than the repo root on purpose — with
   // `directory: "."` Wrangler sweeps in .git and the repo metadata, and
   // .assetsignore does not reliably exclude them.
-  "name": "sachin-portfolio",
+
+  // Must match the Worker the dashboard created, or Workers Builds overrides
+  // it with the CI name and warns on every deploy.
+  "name": "portfolio",
   "compatibility_date": "2026-09-10",
-  // Custom domains, declared here rather than clicked in the dashboard so the
-  // hostname config lives with the code. Wrangler creates and owns the DNS
-  // records for these on deploy — any pre-existing A/CNAME for the same
-  // hostname must be deleted first or the deploy fails.
-  "routes": [
-    { "pattern": "sachinvasle.in", "custom_domain": true },
-    { "pattern": "www.sachinvasle.in", "custom_domain": true }
-  ],
+
+  // Keeps the *.workers.dev URL alive. Once a config file exists it is the
+  // sole source of truth: an unset workers_dev is treated as false, and
+  // Cloudflare silently disables the URL the dashboard had enabled.
+  "workers_dev": true,
+
+  // Custom domains are added in a follow-up commit, once the Hostinger A and
+  // CNAME records imported into this zone have been deleted. Wrangler creates
+  // and owns the DNS record for each custom domain, so it fails while another
+  // record holds the same hostname. When re-adding, zone_name is mandatory —
+  // Wrangler cannot infer the zone from an apex route and fails with
+  // "Can't infer zone from route" [code: 10082]:
+  //
+  // "routes": [
+  //   { "pattern": "sachinvasle.in", "custom_domain": true, "zone_name": "sachinvasle.in" },
+  //   { "pattern": "www.sachinvasle.in", "custom_domain": true, "zone_name": "sachinvasle.in" }
+  // ],
+
   "assets": {
     "directory": "public"
     // Leave html_handling at its default ("auto-trailing-slash"). Setting it
