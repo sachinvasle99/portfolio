@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 
 <head>
   <meta charset="UTF-8">
@@ -9,15 +9,14 @@
     content="AI infrastructure and DevOps engineer. Hybrid Kubernetes across on-premises bare metal and AWS EKS, self-hosted LLM inference on on-prem GPUs, and an AI-powered SRE root cause analysis platform built from scratch.">
   <meta name="author" content="Sachin Vasle">
   <meta name="robots" content="index, follow, max-image-preview:large">
-  <meta name="theme-color" content="#0b0c0e" media="(prefers-color-scheme: dark)">
-  <meta name="theme-color" content="#f6f3ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#f6f3ee">
 
   <!-- Theme boot — runs before first paint so there is no flash.
-       Dark is the design; light only when the visitor chooses it. -->
+       Light is the default; dark only when the visitor chooses it. -->
   <script>
     (function () {
       document.documentElement.classList.add('js');
-      var t = 'dark';
+      var t = 'light';
       try { var s = localStorage.getItem('theme'); if (s === 'light' || s === 'dark') t = s; } catch (e) { }
       document.documentElement.setAttribute('data-theme', t);
     })();
@@ -441,7 +440,7 @@
               rebuild from a repository rather than a pet nobody dares restart, and a change to CI
               gets reviewed like any other change. Around it: GitHub Actions, GitLab CI and
               Bitbucket Pipelines running inside Kubernetes, JFrog Artifactory governing artifact
-              promotion, and GitOps on ArgoCD and FluxCD giving teams self-service deploys with
+              promotion, and GitOps on ArgoCD — FluxCD at Revent Labs — giving teams self-service deploys with
               rollbacks that work.
             </p>
 
@@ -602,10 +601,17 @@
                   etcd health and backups, rolling upgrades, certificate rotation, and the deep
                   troubleshooting that lands on the API server, scheduler, kubelet, CoreDNS and the
                   CNI — across RKE2 on bare metal and Amazon EKS.</li>
+                <li><b>Storage on bare metal.</b> The layer a managed platform hands you for free
+                  and a data centre does not: <span class="hl">TopoLVM</span> for local-volume
+                  provisioning, with <span class="hl">Ceph</span> and <span class="hl">Longhorn</span>
+                  for replicated block storage — storage classes, PVC lifecycle, capacity and
+                  recovery all owned in-house.</li>
                 <li><b>AWS, as code.</b> Multi-region workloads with VPCs, subnets, IAM, node groups
-                  and supporting services in reusable Terraform and Terragrunt modules; ECR for
-                  images, and cost kept honest through rightsizing, storage lifecycle policies and
-                  idle-resource cleanup.</li>
+                  and supporting services in reusable Terraform and Terragrunt modules. Day to day
+                  that means <span class="hl">EKS, EC2, VPC, IAM, ELB, Route&nbsp;53, S3, EBS, ECR,
+                  RDS, CloudWatch, CloudFront, Lambda and Secrets Manager</span> — with cost kept
+                  honest through rightsizing, storage lifecycle policies and idle-resource
+                  cleanup.</li>
                 <li><b>Networking that spans both sides.</b> CNI and CoreDNS on bare metal, ingress
                   controllers and load balancing, network policies and multi-tenant namespace
                   isolation, and the firewall and routing work that hybrid connectivity actually
@@ -614,7 +620,7 @@
                   <span class="hl">JCasC</span> — controllers, plugins, credentials and jobs as YAML
                   in Git — plus GitHub Actions, GitLab CI and Bitbucket Pipelines inside Kubernetes,
                   JFrog Artifactory for artifact promotion, Helm and Kustomize for packaging, and
-                  GitOps on ArgoCD and FluxCD with rollbacks that work.</li>
+                  GitOps on ArgoCD with automated rollback.</li>
                 <li><b>AI and GPU infrastructure.</b> Self-hosted LLM inference on on-premises GPU
                   compute — model serving, GPU utilization, inference performance, context
                   management and tool-calling — and Krista XRay, the AI-powered SRE platform built
@@ -644,15 +650,19 @@
                 </ul>
               </div>
               <div class="release__chips chips" data-stagger>
-                <span class="kchip"><span class="d"></span>RKE2</span>
                 <span class="kchip"><span class="d"></span>Amazon EKS</span>
+                <span class="kchip"><span class="d"></span>AWS</span>
+                <span class="kchip"><span class="d"></span>RKE2</span>
+                <span class="kchip"><span class="d"></span>Bare metal</span>
                 <span class="kchip"><span class="d"></span>Private cloud</span>
+                <span class="kchip"><span class="d"></span>TopoLVM</span>
+                <span class="kchip"><span class="d"></span>Ceph</span>
+                <span class="kchip"><span class="d"></span>Longhorn</span>
                 <span class="kchip"><span class="d"></span>Terraform</span>
                 <span class="kchip"><span class="d"></span>Terragrunt</span>
                 <span class="kchip"><span class="d"></span>Ansible</span>
-                <span class="kchip"><span class="d"></span>Jenkins · JCasC</span>
                 <span class="kchip"><span class="d"></span>ArgoCD</span>
-                <span class="kchip"><span class="d"></span>FluxCD</span>
+                <span class="kchip"><span class="d"></span>Jenkins · JCasC</span>
                 <span class="kchip"><span class="d"></span>Helm</span>
                 <span class="kchip"><span class="d"></span>GPU / LLM serving</span>
                 <span class="kchip"><span class="d"></span>SigNoz</span>
@@ -736,6 +746,10 @@
                 <span class="kchip"><span class="d"></span>MongoDB Atlas</span>
                 <span class="kchip"><span class="d"></span>Helmfile</span>
                 <span class="kchip"><span class="d"></span>ArgoCD · FluxCD</span>
+                <span class="kchip"><span class="d"></span>GKE · GAR · GCS</span>
+                <span class="kchip"><span class="d"></span>Cloud SQL · Pub/Sub</span>
+                <span class="kchip"><span class="d"></span>EC2 · VPC · IAM · ELB</span>
+                <span class="kchip"><span class="d"></span>Lambda · SQS · SNS</span>
                 <span class="kchip"><span class="d"></span>HPA · VPA · KEDA</span>
                 <span class="kchip"><span class="d"></span>GitHub Actions</span>
                 <span class="kchip"><span class="d"></span>SonarQube</span>
@@ -761,8 +775,10 @@
               </p>
               <ul class="role__points">
                 <li><b>EKS cluster management at scale.</b> Ran production clusters carrying 100+
-                  workloads, keeping resource utilization and platform stability in hand, and became
-                  the person critical Kubernetes production issues got escalated to.</li>
+                  workloads across <span class="hl">EC2, VPC, IAM, ELB, S3, EBS, ECR, Route&nbsp;53
+                  and CloudWatch</span>, keeping resource utilization and platform stability in
+                  hand, and became the person critical Kubernetes production issues got escalated
+                  to.</li>
                 <li><b>Helm-based delivery.</b> Developed and maintained Helm charts for application
                   deployment onto EKS, making releases consistent and repeatable instead of
                   hand-assembled per environment.</li>
@@ -795,6 +811,10 @@
               <div class="release__chips chips" data-stagger>
                 <span class="kchip"><span class="d"></span>AWS</span>
                 <span class="kchip"><span class="d"></span>Amazon EKS</span>
+                <span class="kchip"><span class="d"></span>EC2 · VPC · IAM</span>
+                <span class="kchip"><span class="d"></span>ELB · Route 53</span>
+                <span class="kchip"><span class="d"></span>S3 · EBS · ECR</span>
+                <span class="kchip"><span class="d"></span>CloudWatch</span>
                 <span class="kchip"><span class="d"></span>Kubernetes</span>
                 <span class="kchip"><span class="d"></span>Helm</span>
                 <span class="kchip"><span class="d"></span>Docker</span>
@@ -827,39 +847,49 @@
               <span class="path">infra/</span>stack.yaml
               <span class="spec__hint">hover a card ↓</span>
             </figcaption>
-            <pre><span class="ln"><span class="no">1</span><span class="k">stack</span><span class="p">:</span></span><span class="ln" data-key="platform"><span class="no">2</span>  <span class="k">platform</span><span class="p">:</span>      <span class="p">[</span><span class="v">rke2</span><span class="p">,</span> <span class="v">eks</span><span class="p">,</span> <span class="v">gke</span><span class="p">,</span> <span class="v">bare-metal</span><span class="p">,</span> <span class="v">etcd</span><span class="p">,</span> <span class="v">cni</span><span class="p">,</span> <span class="v">helm</span><span class="p">,</span> <span class="v">private-cloud</span><span class="p">]</span></span><span class="ln" data-key="cloud"><span class="no">3</span>  <span class="k">cloud</span><span class="p">:</span>         <span class="p">[</span><span class="v">aws</span><span class="p">,</span> <span class="v">gcp</span><span class="p">,</span> <span class="v">on-prem</span><span class="p">,</span> <span class="v">cloudfront</span><span class="p">,</span> <span class="v">multi-region</span><span class="p">]</span></span><span class="ln" data-key="iac"><span class="no">4</span>  <span class="k">iac</span><span class="p">:</span>           <span class="p">[</span><span class="v">terraform</span><span class="p">,</span> <span class="v">terragrunt</span><span class="p">,</span> <span class="v">ansible</span><span class="p">,</span> <span class="v">helmfile</span><span class="p">]</span></span><span class="ln" data-key="delivery"><span class="no">5</span>  <span class="k">delivery</span><span class="p">:</span>      <span class="p">[</span><span class="v">argocd</span><span class="p">,</span> <span class="v">fluxcd</span><span class="p">,</span> <span class="v">jenkins-jcasc</span><span class="p">,</span> <span class="v">gh-actions</span><span class="p">,</span> <span class="v">gitlab-ci</span><span class="p">,</span> <span class="v">artifactory</span><span class="p">]</span></span><span class="ln" data-key="scaling"><span class="no">6</span>  <span class="k">scaling</span><span class="p">:</span>       <span class="p">[</span><span class="v">hpa</span><span class="p">,</span> <span class="v">vpa</span><span class="p">,</span> <span class="v">keda</span><span class="p">,</span> <span class="v">cluster-autoscaler</span><span class="p">]</span></span><span class="ln" data-key="observability"><span class="no">7</span>  <span class="k">observability</span><span class="p">:</span> <span class="p">[</span><span class="v">prometheus</span><span class="p">,</span> <span class="v">grafana</span><span class="p">,</span> <span class="v">signoz</span><span class="p">,</span> <span class="v">otel</span><span class="p">,</span> <span class="v">loki</span><span class="p">,</span> <span class="v">elk</span><span class="p">,</span> <span class="v">pagerduty</span><span class="p">]</span></span><span class="ln" data-key="security"><span class="no">8</span>  <span class="k">security</span><span class="p">:</span>      <span class="p">[</span><span class="v">trivy</span><span class="p">,</span> <span class="v">vault</span><span class="p">,</span> <span class="v">sealed-secrets</span><span class="p">,</span> <span class="v">eso</span><span class="p">,</span> <span class="v">rbac</span><span class="p">,</span> <span class="v">network-policy</span><span class="p">]</span></span><span class="ln" data-key="compliance"><span class="no">9</span>  <span class="k">compliance</span><span class="p">:</span>    <span class="p">[</span><span class="v">soc2</span><span class="p">,</span> <span class="v">hipaa</span><span class="p">,</span> <span class="v">data-residency</span><span class="p">,</span> <span class="v">audit-trail</span><span class="p">]</span></span><span class="ln" data-key="ai"><span class="no">10</span>  <span class="k">ai</span><span class="p">:</span>            <span class="p">[</span><span class="v">self-hosted-llm</span><span class="p">,</span> <span class="v">gpu-inference</span><span class="p">,</span> <span class="v">mcp</span><span class="p">,</span> <span class="v">tool-calling</span><span class="p">]</span></span><span class="ln" data-key="code"><span class="no">11</span>  <span class="k">code</span><span class="p">:</span>          <span class="p">[</span><span class="v">python</span><span class="p">,</span> <span class="v">fastapi</span><span class="p">,</span> <span class="v">bash</span><span class="p">,</span> <span class="v">groovy</span><span class="p">,</span> <span class="v">react</span><span class="p">]</span></span><span class="ln" data-key="data"><span class="no">12</span>  <span class="k">data</span><span class="p">:</span>          <span class="p">[</span><span class="v">postgres</span><span class="p">,</span> <span class="v">mysql</span><span class="p">,</span> <span class="v">mongodb</span><span class="p">,</span> <span class="v">redis</span><span class="p">,</span> <span class="v">clickhouse</span><span class="p">,</span> <span class="v">ram-backed-pg</span><span class="p">]</span></span><span class="ln"><span class="no">13</span></span><span class="ln"><span class="no">14</span><span class="k">mode</span><span class="p">:</span> <span class="v">read_only_by_default</span>  <span class="c"># deterministic core · narrating edge</span></span></pre>
+            <pre><span class="ln"><span class="no">1</span><span class="k">stack</span><span class="p">:</span></span><span class="ln" data-key="cloud"><span class="no">2</span>  <span class="k">cloud</span><span class="p">:</span>          <span class="p">[</span><span class="v">aws</span><span class="p">,</span> <span class="v">gcp</span><span class="p">,</span> <span class="v">on-premises</span><span class="p">,</span> <span class="v">multi-region</span><span class="p">]</span></span><span class="ln" data-key="kubernetes"><span class="no">3</span>  <span class="k">kubernetes</span><span class="p">:</span>     <span class="p">[</span><span class="v">rke2</span><span class="p">,</span> <span class="v">eks</span><span class="p">,</span> <span class="v">gke</span><span class="p">,</span> <span class="v">bare-metal</span><span class="p">,</span> <span class="v">private-cloud</span><span class="p">,</span> <span class="v">etcd</span><span class="p">,</span> <span class="v">cni</span><span class="p">,</span> <span class="v">coredns</span><span class="p">]</span></span><span class="ln" data-key="storage"><span class="no">4</span>  <span class="k">storage</span><span class="p">:</span>        <span class="p">[</span><span class="v">topolvm</span><span class="p">,</span> <span class="v">ceph</span><span class="p">,</span> <span class="v">longhorn</span><span class="p">,</span> <span class="v">storage-classes</span><span class="p">,</span> <span class="v">ebs</span><span class="p">,</span> <span class="v">s3</span><span class="p">]</span></span><span class="ln" data-key="infrastructure"><span class="no">5</span>  <span class="k">infrastructure</span><span class="p">:</span> <span class="p">[</span><span class="v">terraform</span><span class="p">,</span> <span class="v">terragrunt</span><span class="p">,</span> <span class="v">ansible</span><span class="p">]</span></span><span class="ln" data-key="containers"><span class="no">6</span>  <span class="k">containers</span><span class="p">:</span>     <span class="p">[</span><span class="v">docker</span><span class="p">,</span> <span class="v">containerd</span><span class="p">,</span> <span class="v">ecr</span><span class="p">,</span> <span class="v">artifact-registry</span><span class="p">,</span> <span class="v">artifactory</span><span class="p">]</span></span><span class="ln" data-key="delivery"><span class="no">7</span>  <span class="k">delivery</span><span class="p">:</span>       <span class="p">[</span><span class="v">helm</span><span class="p">,</span> <span class="v">helmfile</span><span class="p">,</span> <span class="v">kustomize</span><span class="p">,</span> <span class="v">argocd</span><span class="p">,</span> <span class="v">fluxcd</span><span class="p">,</span> <span class="v">jenkins-jcasc</span><span class="p">,</span> <span class="v">github-actions</span><span class="p">,</span> <span class="v">gitlab-ci</span><span class="p">,</span> <span class="v">bitbucket-pipelines</span><span class="p">]</span></span><span class="ln" data-key="scaling"><span class="no">8</span>  <span class="k">scaling</span><span class="p">:</span>        <span class="p">[</span><span class="v">hpa</span><span class="p">,</span> <span class="v">vpa</span><span class="p">,</span> <span class="v">keda</span><span class="p">,</span> <span class="v">cluster-autoscaler</span><span class="p">]</span></span><span class="ln" data-key="networking"><span class="no">9</span>  <span class="k">networking</span><span class="p">:</span>     <span class="p">[</span><span class="v">vpc</span><span class="p">,</span> <span class="v">ingress-nginx</span><span class="p">,</span> <span class="v">traefik</span><span class="p">,</span> <span class="v">cilium</span><span class="p">,</span> <span class="v">calico</span><span class="p">,</span> <span class="v">load-balancing</span><span class="p">,</span> <span class="v">dns</span><span class="p">,</span> <span class="v">cloudfront</span><span class="p">]</span></span><span class="ln" data-key="observability"><span class="no">10</span>  <span class="k">observability</span><span class="p">:</span>  <span class="p">[</span><span class="v">prometheus</span><span class="p">,</span> <span class="v">grafana</span><span class="p">,</span> <span class="v">signoz</span><span class="p">,</span> <span class="v">opentelemetry</span><span class="p">,</span> <span class="v">loki</span><span class="p">,</span> <span class="v">promtail</span><span class="p">,</span> <span class="v">elk</span><span class="p">,</span> <span class="v">pagerduty</span><span class="p">]</span></span><span class="ln" data-key="security"><span class="no">11</span>  <span class="k">security</span><span class="p">:</span>       <span class="p">[</span><span class="v">trivy</span><span class="p">,</span> <span class="v">sonarqube</span><span class="p">,</span> <span class="v">vault</span><span class="p">,</span> <span class="v">sealed-secrets</span><span class="p">,</span> <span class="v">external-secrets</span><span class="p">,</span> <span class="v">rbac</span><span class="p">,</span> <span class="v">network-policy</span><span class="p">]</span></span><span class="ln" data-key="compliance"><span class="no">12</span>  <span class="k">compliance</span><span class="p">:</span>     <span class="p">[</span><span class="v">soc2</span><span class="p">,</span> <span class="v">hipaa</span><span class="p">,</span> <span class="v">data-residency</span><span class="p">,</span> <span class="v">least-privilege-iam</span><span class="p">]</span></span><span class="ln" data-key="datastores"><span class="no">13</span>  <span class="k">datastores</span><span class="p">:</span>     <span class="p">[</span><span class="v">postgresql</span><span class="p">,</span> <span class="v">mysql</span><span class="p">,</span> <span class="v">mongodb</span><span class="p">,</span> <span class="v">redis</span><span class="p">,</span> <span class="v">clickhouse</span><span class="p">,</span> <span class="v">elasticsearch</span><span class="p">,</span> <span class="v">rds</span><span class="p">,</span> <span class="v">aurora</span><span class="p">,</span> <span class="v">dynamodb</span><span class="p">,</span> <span class="v">cloud-sql</span><span class="p">]</span></span><span class="ln" data-key="messaging"><span class="no">14</span>  <span class="k">messaging</span><span class="p">:</span>      <span class="p">[</span><span class="v">kafka</span><span class="p">,</span> <span class="v">artemis</span><span class="p">,</span> <span class="v">sqs</span><span class="p">,</span> <span class="v">sns</span><span class="p">,</span> <span class="v">pubsub</span><span class="p">]</span></span><span class="ln" data-key="languages"><span class="no">15</span>  <span class="k">languages</span><span class="p">:</span>      <span class="p">[</span><span class="v">python</span><span class="p">,</span> <span class="v">bash</span><span class="p">,</span> <span class="v">groovy</span><span class="p">]</span></span><span class="ln" data-key="ai-platform"><span class="no">16</span>  <span class="k">ai-platform</span><span class="p">:</span>    <span class="p">[</span><span class="v">self-hosted-llm</span><span class="p">,</span> <span class="v">gpu-inference</span><span class="p">,</span> <span class="v">mcp</span><span class="p">,</span> <span class="v">tool-calling</span><span class="p">,</span> <span class="v">read-only-guardrails</span><span class="p">]</span></span><span class="ln"><span class="no">17</span></span><span class="ln"><span class="no">18</span><span class="k">mode</span><span class="p">:</span> <span class="v">read_only_by_default</span>  <span class="c"># deterministic core · narrating edge</span></span></pre>
           </figure>
 
           <div class="stack-cards" data-stagger>
-            <article class="stack-card" data-keys="platform,cloud">
+            <article class="stack-card" data-keys="cloud,kubernetes,storage">
               <span class="stack-card__k">run</span>
-              <strong>Clusters &amp; cloud</strong>
-              <p>RKE2 on bare metal, private cloud, Amazon EKS, GKE, etcd, CNI, Helm, AWS, GCP</p>
+              <strong>Cloud &amp; clusters</strong>
+              <p>AWS, GCP, on-premises. RKE2 on bare metal, EKS, GKE, etcd, CNI, CoreDNS, plus TopoLVM, Ceph and Longhorn storage</p>
             </article>
-            <article class="stack-card" data-keys="iac,delivery">
+            <article class="stack-card" data-keys="infrastructure,delivery,scaling">
               <span class="stack-card__k">ship</span>
-              <strong>IaC &amp; GitOps</strong>
-              <p>Terraform, Terragrunt, Ansible, Helmfile, ArgoCD, FluxCD, Jenkins JCasC, Artifactory</p>
+              <strong>IaC, GitOps &amp; scaling</strong>
+              <p>Terraform, Terragrunt, Ansible, Helm, Helmfile, ArgoCD, FluxCD, Jenkins JCasC, HPA/VPA/KEDA</p>
             </article>
-            <article class="stack-card" data-keys="security,compliance">
-              <span class="stack-card__k">secure</span>
-              <strong>DevSecOps &amp; compliance</strong>
-              <p>Trivy scanning, Vault, Sealed Secrets, ESO, RBAC, network policy, SOC 2, HIPAA</p>
+            <article class="stack-card" data-keys="containers,languages">
+              <span class="stack-card__k">build</span>
+              <strong>Containers &amp; code</strong>
+              <p>Docker, containerd, ECR, Artifactory, Artifact Registry. Python, Bash, Groovy</p>
+            </article>
+            <article class="stack-card" data-keys="networking">
+              <span class="stack-card__k">connect</span>
+              <strong>Networking</strong>
+              <p>VPC, ingress-nginx, Traefik, Cilium, Calico, load balancing, DNS, CloudFront</p>
             </article>
             <article class="stack-card" data-keys="observability">
               <span class="stack-card__k">observe</span>
               <strong>Telemetry</strong>
-              <p>Prometheus, Grafana, SigNoz, OpenTelemetry, Loki, ELK/EFK, PagerDuty on-call</p>
+              <p>Prometheus, Grafana, SigNoz, OpenTelemetry, Loki, Promtail, ELK, PagerDuty on-call</p>
             </article>
-            <article class="stack-card" data-keys="ai">
+            <article class="stack-card" data-keys="security,compliance">
+              <span class="stack-card__k">secure</span>
+              <strong>DevSecOps &amp; compliance</strong>
+              <p>Trivy, SonarQube, Vault, Sealed Secrets, ESO, RBAC, network policy, SOC 2, HIPAA</p>
+            </article>
+            <article class="stack-card" data-keys="datastores,messaging">
+              <span class="stack-card__k">store</span>
+              <strong>Data &amp; messaging</strong>
+              <p>PostgreSQL, MySQL, MongoDB, Redis, ClickHouse, Elasticsearch, RDS, Aurora, Kafka, SQS</p>
+            </article>
+            <article class="stack-card" data-keys="ai-platform">
               <span class="stack-card__k">reason</span>
-              <strong>AI &amp; GPU</strong>
-              <p>Self-hosted LLM serving, on-prem GPU inference, MCP, tool-calling, guardrails</p>
-            </article>
-            <article class="stack-card" data-keys="code,data,scaling">
-              <span class="stack-card__k">build</span>
-              <strong>Code &amp; data</strong>
-              <p>Python, FastAPI, Bash, Groovy, React, Postgres on RAM-backed storage, Redis, ClickHouse</p>
+              <strong>AI platform</strong>
+              <p>Self-hosted LLM serving, on-prem GPU inference, MCP, tool-calling, read-only guardrails</p>
             </article>
           </div>
         </div>
