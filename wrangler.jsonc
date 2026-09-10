@@ -17,17 +17,16 @@
   // Cloudflare silently disables the URL the dashboard had enabled.
   "workers_dev": true,
 
-  // Custom domains are added in a follow-up commit, once the Hostinger A and
-  // CNAME records imported into this zone have been deleted. Wrangler creates
-  // and owns the DNS record for each custom domain, so it fails while another
-  // record holds the same hostname. When re-adding, zone_name is mandatory —
-  // Wrangler cannot infer the zone from an apex route and fails with
-  // "Can't infer zone from route" [code: 10082]:
-  //
-  // "routes": [
-  //   { "pattern": "sachinvasle.in", "custom_domain": true, "zone_name": "sachinvasle.in" },
-  //   { "pattern": "www.sachinvasle.in", "custom_domain": true, "zone_name": "sachinvasle.in" }
-  // ],
+  // Custom domains, declared here rather than clicked in the dashboard so the
+  // hostname config is version-controlled. Two things this needs:
+  //   - zone_name is mandatory; Wrangler cannot infer the zone for an apex
+  //     route and fails with "Can't infer zone from route" [code: 10082]
+  //   - Wrangler creates and owns the DNS record for each hostname, so no
+  //     other A/CNAME may hold the same name, and the zone must be Active
+  "routes": [
+    { "pattern": "sachinvasle.in", "custom_domain": true, "zone_name": "sachinvasle.in" },
+    { "pattern": "www.sachinvasle.in", "custom_domain": true, "zone_name": "sachinvasle.in" }
+  ],
 
   "assets": {
     "directory": "public"
