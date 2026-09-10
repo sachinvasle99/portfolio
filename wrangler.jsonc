@@ -8,6 +8,14 @@
   // .assetsignore does not reliably exclude them.
   "name": "sachin-portfolio",
   "compatibility_date": "2026-09-10",
+  // Custom domains, declared here rather than clicked in the dashboard so the
+  // hostname config lives with the code. Wrangler creates and owns the DNS
+  // records for these on deploy — any pre-existing A/CNAME for the same
+  // hostname must be deleted first or the deploy fails.
+  "routes": [
+    { "pattern": "sachinvasle.in", "custom_domain": true },
+    { "pattern": "www.sachinvasle.in", "custom_domain": true }
+  ],
   "assets": {
     "directory": "public"
     // Leave html_handling at its default ("auto-trailing-slash"). Setting it
